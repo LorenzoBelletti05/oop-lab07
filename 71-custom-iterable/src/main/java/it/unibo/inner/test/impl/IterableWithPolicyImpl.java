@@ -1,4 +1,4 @@
-package main.java.it.unibo.inner.test.impl;
+package it.unibo.inner.test.impl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
