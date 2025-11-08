@@ -54,7 +54,21 @@ public final class Transformers {
      * @return A transformed list where each input element is replaced with the produced elements
      */
     public static <I, O> List<O> transform(final Iterable<I> base, final Function<I, O> transformer) {
-        return null;
+        
+        //ensure to create a type Function element and implement the cal method
+        final Function<I, Collection<O>> elem = new Function<>() {
+            @Override
+            public Collection<O> call(I input) {
+                final O ris = transformer.call(input);
+                return List.of(ris); //return a list (collection) of "O"
+
+            }
+            
+        };
+
+        return flattenTransform(base, elem); //give to flatterTrasform the "array of data" and the newly Funziont elem which is going to iterate
+        
+
     }
 
     /**
@@ -70,7 +84,8 @@ public final class Transformers {
      * @return A flattened list with the elements of each collection in the input
      */
     public static <I> List<? extends I> flatten(final Iterable<? extends Collection<? extends I>> base) {
-        return null;
+        
+        return flattenTransform(base, Function.identity());
     }
 
     /**
@@ -87,7 +102,18 @@ public final class Transformers {
      * @return A list containing only the elements that passed the test
      */
     public static <I> List<I> select(final Iterable<I> base, final Function<I, Boolean> test) {
-        return null;
+                
+        final Function<I, Collection<I>> elem = new Function<>() {
+            @Override
+            public Collection<I> call(I input) {
+                if(test.call(input)) {
+                    return List.of(input);
+                }else {
+                    return List.of();
+                }
+            }            
+        };
+        return flattenTransform(base, elem);        
     }
 
     /**
@@ -103,6 +129,15 @@ public final class Transformers {
      * @return A list containing only the elements that passed the test
      */
     public static <I> List<I> reject(final Iterable<I> base, final Function<I, Boolean> test) {
-        return null;
+        
+        final Function<I, Boolean> elem = new Function<>() {
+            @Override
+            public Boolean call(I input) {
+                
+                return !test.call(input);
+            }
+        };        
+        
+        return select(base, elem);
     }
 }
