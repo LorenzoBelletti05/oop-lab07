@@ -12,6 +12,8 @@ Si osservi `TestFunctionalLibrary` per trovare esempi di classi anonime che impl
 Ci si prepari a rispondere alla seguente domanda al momento della correzione:
 > perché `identity()` è un metodo, e non una costante `public static`?
 
+>>perché il compilatore sostituisce il tipo generico dinamicamente nel metodo mentre se fosse stato un campo si sarebbe stati obbligati a mettere una classe di appartenenza alle origini della gerarchia (es object) ed eseguire un casting all'occorrenza.
+
 ## Parte 2: sfruttare le classi anonime per costruire una libreria funzionale
 
 Si implementino le funzioni di utilità non ancora implementate all'interno di `Transformers`.
